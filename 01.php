@@ -5,16 +5,9 @@
     function getArray($count) {
         $result = [];
         for ($i = 0; $i < $count; $i++) {
-            $result[$i] = rand(0, 100);
+            $result[$i] = rand(0, 10000);
         }
         return $result;
-    }
-
-    function printArr($array) {
-        for ($i = 0; $i < count($array); $i++) {
-            echo $array[$i] . ", ";
-        }
-        echo "<br>";
     }
 
     // функция пузырьковой сортировки
@@ -86,16 +79,34 @@
             qSort($arr, $i, $high);
         }
     }
+    // создадим массив из 10000 элементов
 
-    $arr = getArray(30);
-    echo "Несортированный массив<br>";
-    printArr($arr);
-    $bubbleSortedArr = bubbleSort($arr);
-    $shakerSortArr = shakerSort($arr);
+    $arr = getArray(10000);
+
+    // сортировка пузырьком
+
+    $start = microtime(true);
+    $sortedArr = bubbleSort($arr);
+    $end = microtime(true);
+    $duration = $end - $start;
+    echo "Сортировка пузырьком заняла " . $duration . " секунд.<br>";
+
+    // шейкерная сортировка
+
+    $start = microtime(true);
+    $sortedArr = shakerSort($arr);
+    $end = microtime(true);
+    $duration = $end - $start;
+    echo "Шейкерная сортировка заняла " . $duration . " секунд.<br>";
+
+    // быстрая сортировка
+
+    $start = microtime(true);
     quickSort($arr);
-    echo "Массив, отсортированный пузырьковой сортировкой<br>";
-    printArr($bubbleSortedArr);
-    echo "Массив, отсортированный шейкерной сортировкой<br>";
-    printArr($shakerSortArr);
-    echo "Массив, отсортированный быстрой сортировкой<br>";
-    printArr($arr);
+    $end = microtime(true);
+    $duration = $end - $start;
+    echo "Быстрая сортировка заняла " . $duration . " секунд.<br>";
+
+    // шейкерная сортировка занимает самое долгое время в итоге, примерно в 2 раза медленнее пузырьковой
+    // быстрая сортировка примерно в 300 раз быстрее пузырьковой и в 600 раз быстрее шейкерной
+
